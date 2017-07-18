@@ -1,0 +1,10 @@
+# General
+*.pyc
+
+# Datasets
+data/
+data/*/
+
+# Models
+odels/*/*.csv
+models/*/*.pkl
