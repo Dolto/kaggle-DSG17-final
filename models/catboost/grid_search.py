@@ -15,8 +15,6 @@ y_train = pd.read_csv('data/y_train.csv')['Survived']
 # Determine categorical features
 cat_features = np.where(X_train.dtypes == int)[0]
 
-print(cat_features)
-
 # Load CV
 cv = joblib.load('models/cv.pkl')
 

@@ -52,8 +52,6 @@ def task_make_encoder():
     }
 
 
-# CatBoost
-
 def task_grid_search_catboost():
     return {
         'actions': ['python models/catboost/grid_search.py'],
@@ -89,8 +87,6 @@ def task_bagging_catboost():
     }
 
 
-# XGBoost
-
 def task_fit_xgboost():
     return {
         'actions': ['python models/xgboost/fit.py'],
@@ -107,6 +103,7 @@ def task_predict_xgboost():
         'targets': ['models/xgboost/submission_xgboost.csv']
     }
 
+
 def task_plot_xgboost():
     return {
         'actions': [
@@ -118,4 +115,33 @@ def task_plot_xgboost():
             'models/xgboost/roc_auc_learning_curve.png',
             'models/xgboost/feature_importance.png'
         ]
+    }
+
+
+def task_fit_max_metric():
+    return {
+        'actions': ['python models/max_metric/fit.py'],
+        'file_dep': TRAINING_SETS + ['models/encoder.pkl'],
+        'targets': ['models/max_metric/pipeline.pkl'],
+        'verbosity': 2
+    }
+
+
+def task_predict_max_metric():
+    return {
+        'actions': ['python models/max_metric/predict.py'],
+        'file_dep': TEST_SETS + ['models/encoder.pkl', 'models/max_metric/pipeline.pkl'],
+        'targets': ['models/max_metric/submission_max_metric.csv']
+    }
+
+
+def task_blend_submissions():
+    return {
+        'actions': ['python scripts/blend_submissions.py'],
+        'file_dep': [
+            'models/xgboost/submission_xgboost.csv',
+            'models/catboost/submission_catboost.csv'
+            'models/catboost/submission_catboost_bagged.csv'
+        ],
+        'targets': ['models/blended_submission.csv']
     }
