@@ -1,10 +1,17 @@
 # General
 *.pyc
+.ipynb_checkpoints/
+*.db
+test/
+train/
 
 # Datasets
 data/
-data/*/
 
 # Models
-odels/*/*.csv
+models/*/*.csv
+models/*/*.json
+models/*.pkl
 models/*/*.pkl
+models/*/*.png
+*.tsv
