@@ -3,7 +3,7 @@ from sklearn.externals import joblib
 from xgboost import plot_importance
 
 
-pipe = joblib.load('models/xgboost/pipeline_best.pkl')
+pipe = joblib.load('models/xgboost/pipeline.pkl')
 gbm = pipe.steps[-1][1]
 
 plot_importance(gbm)

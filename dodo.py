@@ -135,12 +135,29 @@ def task_predict_max_metric():
     }
 
 
+def task_fit_stacking():
+    return {
+        'actions': ['python models/stacking/fit.py'],
+        'file_dep': TRAINING_SETS + ['models/encoder.pkl'],
+        'targets': ['models/stacking/stack.pkl'],
+        'verbosity': 2
+    }
+
+
+def task_predict_stacking():
+    return {
+        'actions': ['python models/stacking/predict.py'],
+        'file_dep': TEST_SETS + ['models/encoder.pkl', 'models/stacking/stack.pkl'],
+        'targets': ['models/stacking/submission_stacking.csv']
+    }
+
+
 def task_blend_submissions():
     return {
         'actions': ['python scripts/blend_submissions.py'],
         'file_dep': [
             'models/xgboost/submission_xgboost.csv',
-            'models/catboost/submission_catboost.csv'
+            'models/catboost/submission_catboost.csv',
             'models/catboost/submission_catboost_bagged.csv'
         ],
         'targets': ['models/blended_submission.csv']

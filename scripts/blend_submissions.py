@@ -4,7 +4,7 @@ import pandas as pd
 
 submission_files = [
     'models/xgboost/submission_xgboost.csv',
-    'models/catboost/submission_catboost.csv'
+    'models/catboost/submission_catboost.csv',
     'models/catboost/submission_catboost_bagged.csv'
 ]
 
