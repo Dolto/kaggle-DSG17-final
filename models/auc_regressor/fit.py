@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn import metrics
 from sklearn import pipeline
 from sklearn.externals import joblib
 import xam
@@ -14,11 +13,11 @@ encoder = joblib.load('models/encoder.pkl')
 
 # Instantiate model
 pipe = pipeline.Pipeline([
-    ('max_metric', xam.linear_model.ClassificationMetricRegression(metric=metrics.roc_auc_score))
+    ('max_metric', xam.linear_model.AUCRegressor())
 ])
 
 # Fit model
 pipe.fit(encoder.transform(X_train), y_train)
 
 # Save the fitted model
-joblib.dump(pipe, 'models/max_metric/pipeline.pkl')
+joblib.dump(pipe, 'models/auc_regressor/pipeline.pkl')

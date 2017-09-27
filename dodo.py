@@ -118,20 +118,20 @@ def task_plot_xgboost():
     }
 
 
-def task_fit_max_metric():
+def task_fit_auc_regressor():
     return {
-        'actions': ['python models/max_metric/fit.py'],
+        'actions': ['python models/auc_regressor/fit.py'],
         'file_dep': TRAINING_SETS + ['models/encoder.pkl'],
-        'targets': ['models/max_metric/pipeline.pkl'],
+        'targets': ['models/auc_regressor/pipeline.pkl'],
         'verbosity': 2
     }
 
 
-def task_predict_max_metric():
+def task_predict_auc_regressor():
     return {
-        'actions': ['python models/max_metric/predict.py'],
-        'file_dep': TEST_SETS + ['models/encoder.pkl', 'models/max_metric/pipeline.pkl'],
-        'targets': ['models/max_metric/submission_max_metric.csv']
+        'actions': ['python models/auc_regressor/predict.py'],
+        'file_dep': TEST_SETS + ['models/encoder.pkl', 'models/auc_regressor/pipeline.pkl'],
+        'targets': ['models/auc_regressor/submission_auc_regressor.csv']
     }
 
 
