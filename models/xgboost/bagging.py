@@ -21,9 +21,9 @@ pipeline = joblib.load('models/xgboost/pipeline.pkl')
 
 predictions = []
 
-n = 10
+n = 5
 for i in range(n):
-    pipeline.set_params(gbm__seed=i)
+    pipeline.set_params(gbm__seed=int(random.randint(1, 10000)))
     pipeline.fit(
         X_fit,
         y_fit['OrderQty'],

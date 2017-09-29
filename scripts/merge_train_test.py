@@ -4,7 +4,7 @@ import pandas as pd
 
 SAMPLE = False
 
-train_filepath = os.path.join('data', 'train.csv') if not SAMPLE else os.path.join('data', 'train_sample.csv')
+train_filepath = os.path.join('data', 'train_resampled.csv') if not SAMPLE else os.path.join('data', 'train_sample.csv')
 test_filepath = os.path.join('data', 'test.csv') if not SAMPLE else os.path.join('data', 'test_sample.csv')
 
 train = pd.read_csv(train_filepath, sep=';')

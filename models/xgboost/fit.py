@@ -4,6 +4,7 @@ from sklearn import model_selection
 from sklearn import pipeline
 from sklearn import preprocessing
 from sklearn.externals import joblib
+from splitting import SplittingEstimator
 import xgboost as xgb
 
 
@@ -22,6 +23,11 @@ pipe = pipeline.Pipeline([
         subsample=0.8
     ))
 ])
+
+def split(x):
+    return x['']
+
+pipe = SplittingEstimator(pipe, split)
 
 pipe.fit(
     X_fit,

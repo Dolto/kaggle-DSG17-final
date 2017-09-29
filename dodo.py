@@ -1,3 +1,14 @@
+
+TRAINING_SETS = [
+    'data/X_train.csv',
+    'data/y_train.csv'
+]
+
+TEST_SETS = [
+    'data/X_test.csv',
+    'data/y_test.csv'
+]
+
 def task_sample():
     return {
         'actions': ['python scripts/sample.py'],
@@ -11,11 +22,20 @@ def task_sample():
         ]
     }
 
+
+def task_resample():
+    return {
+        'actions': ['python scripts/resample.py'],
+        'file_dep': ['data/train.csv'],
+        'targets': ['data/train_resampled.csv']
+    }
+
+
 def task_merge_train_test():
     return {
         'actions': ['python scripts/merge_train_test.py'],
         'file_dep': [
-            'data/train.csv',
+            'data/train_resampled.csv',
             'data/test.csv',
         ],
         'targets': ['data/merged.csv']
@@ -34,16 +54,6 @@ def task_build_material_features():
         'file_dep': ['data/features.csv'],
         'targets': ['data/features_cat.csv']
     }
-
-TRAINING_SETS = [
-    'data/X_train.csv',
-    'data/y_train.csv'
-]
-
-TEST_SETS = [
-    'data/X_test.csv',
-    'data/y_test.csv'
-]
 
 
 def task_split_train_test():

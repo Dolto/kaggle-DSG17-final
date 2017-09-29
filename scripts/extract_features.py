@@ -60,7 +60,6 @@ features['month_mod'] = features['month'] % 3
     #     for _, g in subset.groupby('Material')
     # ])
 
-
 # Remove empty rows
 for col in ['last_order_days_ago_per_material',
             'last_order_days_ago_per_material_and_org',
@@ -71,7 +70,7 @@ for col in ['last_order_days_ago_per_material',
     features = features[features[col].notnull()]
 
 # Drop non-features
-features.drop(['Month', 'date'], axis='columns', inplace=True)
+features.drop(['date'], axis='columns', inplace=True)
 
 # Check no test rows have been dropped
 assert features['OrderQty'].isnull().sum() == 116028
