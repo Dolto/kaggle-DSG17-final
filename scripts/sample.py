@@ -24,7 +24,7 @@ train_columns = [
 assert np.all(train_df.columns == train_columns)
 train_df.to_csv('data/train_sample.csv', sep=';', index=False)
 
-test_df = pd.read_csv('data/test.csv', sep=',')
+test_df = pd.read_csv('data/test.csv', sep=';')
 test_df = test_df[test_df['Material'].isin(mids_sample)]
 test_columns = ['ID', 'SalOrg', 'Material', 'date']
 assert np.all(test_df.columns == test_columns)
