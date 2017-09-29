@@ -23,4 +23,4 @@ features = pd.read_csv('data/features.csv', sep=';')
 
 features_cat = features.merge(mapping, on='Material', how='inner')
 features_encoded = pd.get_dummies(features_cat, columns=features_names)
-
+features_encoded.to_csv('data/features_cat.csv', sep=';', index=False)

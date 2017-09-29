@@ -18,7 +18,7 @@ pipe = pipeline.Pipeline([
     ('gbm', xgb.XGBRegressor(
         n_estimators=2000,
         learning_rate=0.01,
-        max_depth=4,
+        max_depth=8,
         subsample=0.8,
         tree_method='exact'
     ))

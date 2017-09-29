@@ -1,6 +1,6 @@
 import pandas as pd
 
-features = pd.read_csv('data/features.csv', sep=';')
+features = pd.read_csv('data/features_cat.csv', sep=';')
 
 train_idxs = features['OrderQty'].notnull()
 
