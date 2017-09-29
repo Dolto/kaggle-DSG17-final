@@ -10,7 +10,7 @@ test_filepath = os.path.join('data', 'test.csv') if not SAMPLE else os.path.join
 train = pd.read_csv(train_filepath, sep=';')
 test = pd.read_csv(test_filepath, sep=';')
 
-train = train.groupby(['SalOrg', 'Material', 'Month'])['OrderQty', 'ID'].sum().reset_index()
+train = train.groupby(['SalOrg', 'Material', 'Month'])[['OrderQty']].sum().reset_index()
 
 merged = pd.concat((train, test), axis='rows')
 

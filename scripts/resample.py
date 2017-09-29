@@ -10,6 +10,8 @@ train = train.groupby(['SalOrg', 'Material']).resample('1M').sum()
 
 train['OrderQty'] = train['OrderQty'].fillna(0)
 
+train.dropna(axis='columns', inplace=True)
+
 train = train.reset_index()
 
 train.to_csv('data/train_resampled.csv', index=False, sep=';')
