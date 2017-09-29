@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 from sklearn import preprocessing
 
@@ -29,6 +28,20 @@ for _, g in features.groupby(['Material']):
     features['mean_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).mean()
     features['min_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).min()
     features['max_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).max()
+
+
+# Median per product
+features['material_median'] = pd.concat([
+    g['OrderQty'].median()
+    for _, g in features.groupby(['Material'])
+])
+
+# Mean per material
+features['material_mean'] = pd.concat([
+    g['OrderQty'].mean()
+    for _, g in features.groupby(['Material'])
+])
+
 
 # Remove empty rows
 for col in ['last_order_days_ago_per_material',
