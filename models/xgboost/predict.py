@@ -10,7 +10,7 @@ pipe = joblib.load('models/xgboost/pipeline.pkl')
 y_pred = pipe.predict(X_test)
 
 submission = pd.DataFrame(data={
-    'id': range(len(y_pred)),
+    'id': y_test['ID'].astype(int),
     'demand': y_pred
 }).sort_values('id')
 
