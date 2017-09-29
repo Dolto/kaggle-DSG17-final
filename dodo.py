@@ -1,3 +1,13 @@
+def task_merge_train_test():
+    return {
+        'actions': ['python scripts/merge_train_test.py'],
+        'file_dep': [
+            'data/train.csv',
+            'data/test.csv',
+        ],
+        'targets': ['data/merged.csv']
+    }
+
 def task_extract_features():
     return {
         'actions': ['python scripts/extract_features.py'],

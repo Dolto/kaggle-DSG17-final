@@ -3,7 +3,7 @@ from sklearn import preprocessing
 
 
 # Load the training and test set
-features = pd.read_csv('data/train.csv')
+features = pd.read_csv('data/merged.csv')
 
 # Parse date
 features['date'] = pd.to_datetime(features['Month'])
@@ -22,4 +22,4 @@ features['mean_ordered_per_material'] = pd.concat([
     for _, g in features.groupby('Material')
 ])
 
-features.to_csv('data/features_train.csv', index=False)
+features.to_csv('data/features.csv', index=False)
