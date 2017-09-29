@@ -22,8 +22,8 @@ def custom_train_test_split(X_train, y_train):
     return X_fit, X_val, y_fit, y_val
 
 # Create a validation set with 20% of the training set
-# X_fit, X_val, y_fit, y_val = model_selection.train_test_split(X_train, y_train, test_size=0.2)
-X_fit, X_val, y_fit, y_val = custom_train_test_split(X_train, y_train)
+X_fit, X_val, y_fit, y_val = model_selection.train_test_split(X_train, y_train, test_size=0.2)
+#X_fit, X_val, y_fit, y_val = custom_train_test_split(X_train, y_train)
 print('X_fit:', X_fit.shape)
 print('X_val:', X_val.shape)
 print('y_fit:', y_fit.shape)
