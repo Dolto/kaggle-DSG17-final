@@ -13,47 +13,72 @@ features['Month'] = pd.to_datetime(features['Month'])
 features['month'] = features['Month'].dt.month
 features['year'] = features['Month'].dt.year
 
-for _, g in features.groupby(['SalOrg', 'Material']):
+groups_salorg_material = features.groupby(['SalOrg', 'Material'])
+len_groups_salorg_material = len(groups_salorg_material)
+for i, (key, g) in enumerate(groups_salorg_material):
+    print('%s/%s - [%s]' % (i, len_groups_salorg_material, key))
+
     subset = g.sort_values('Month')
     features['last_order_days_ago_per_material_and_org'] = subset['Month'].diff().dt.days
+    
     features['median_ordered_per_material_and_org'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).median()
+    features['median_lag3_ordered_per_material_and_org'] = subset['OrderQty'].shift().rolling(min_periods=1, window=3).median()
+    features['median_lag7_ordered_per_material_and_org'] = subset['OrderQty'].shift().rolling(min_periods=1, window=7).median()
+    
     features['mean_ordered_per_material_and_org'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).mean()
+    features['mean_lag3_ordered_per_material_and_org'] = subset['OrderQty'].shift().rolling(min_periods=1, window=3).mean()
+    features['mean_lag7_ordered_per_material_and_org'] = subset['OrderQty'].shift().rolling(min_periods=1, window=7).mean()
+    
     features['min_ordered_per_material_and_org'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).min()
     features['max_ordered_per_material_and_org'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).max()
 
-for _, g in features.groupby(['Material']):
+groups_material = features.groupby(['Material'])
+len_groups_material = len(groups_material)
+for i, (key, g) in enumerate(groups_material):
+    print('%s/%s - [%s]' % (i, len_groups_material, key))
+
     subset = g.sort_values('Month')
     features['last_order_days_ago_per_material'] = subset['Month'].diff().dt.days
+
     features['median_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).median()
+    features['median_lag3_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=3).median()
+    features['median_lag7_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=7).median()
+    
     features['mean_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).mean()
+    features['mean_lag3_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=3).mean()
+    features['mean_lag7_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=7).mean()
+    
     features['min_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).min()
     features['max_ordered_per_material'] = subset['OrderQty'].shift().rolling(min_periods=1, window=len(g)).max()
 
 
 # Median per product
-features['material_median'] = pd.concat([
-    g['OrderQty'].median()
-    for _, g in features.groupby(['Material'])
-])
+features['material_median'] = features.groupby('Material').median()
 
 # Mean per material
-features['material_mean'] = pd.concat([
-    g['OrderQty'].mean()
-    for _, g in features.groupby(['Material'])
-])
-
+features['material_mean'] = features.groupby('Material').mean()
 
 # Remove empty rows
 for col in ['last_order_days_ago_per_material',
             'last_order_days_ago_per_material_and_org',
             'median_ordered_per_material',
+            'median_lag3_ordered_per_material',
+            'median_lag7_ordered_per_material',
             'median_ordered_per_material_and_org',
+            'median_lag3_ordered_per_material_and_org',
+            'median_lag7_ordered_per_material_and_org',
             'mean_ordered_per_material',
+            'mean_lag3_ordered_per_material',
+            'mean_lag7_ordered_per_material',
             'mean_ordered_per_material_and_org',
+            'mean_lag3_ordered_per_material_and_org',
+            'mean_lag7_ordered_per_material_and_org',
             'min_ordered_per_material',
             'min_ordered_per_material_and_org',
             'max_ordered_per_material',
-            'max_ordered_per_material_and_org'
+            'max_ordered_per_material_and_org',
+            'material_median',
+            'material_mean'
             ]:
     features = features[features[col].notnull()]
 
