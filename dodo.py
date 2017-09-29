@@ -94,7 +94,7 @@ def task_bagging_catboost():
 def task_fit_xgboost():
     return {
         'actions': ['python models/xgboost/fit.py'],
-        'file_dep': TRAINING_SETS + ['models/encoder.pkl'],
+        'file_dep': TRAINING_SETS,
         'targets': ['models/xgboost/pipeline.pkl'],
         'verbosity': 2
     }
