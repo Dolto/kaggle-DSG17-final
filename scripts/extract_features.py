@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn import preprocessing
 
 
 # Load the training and test set
@@ -49,15 +48,17 @@ def merge_aggregate_features(keys, window, wname):
 
 merge_aggregate_features(['Material'], lambda x: len(x), 't')
 merge_aggregate_features(['Material', 'SalOrg'], lambda x: len(x), 't')
-#merge_aggregate_features(['Material'], lambda x: 3, 3)
+merge_aggregate_features(['Material'], lambda x: 3, 3)
 merge_aggregate_features(['Material', 'SalOrg'], lambda x: 3, 3)
-#merge_aggregate_features(['Material'], lambda x: 5, 5)
+merge_aggregate_features(['Material'], lambda x: 5, 5)
 merge_aggregate_features(['Material', 'SalOrg'], lambda x: 5, 5)
-#merge_aggregate_features(['Material'], lambda x: 7, 7)
+merge_aggregate_features(['Material'], lambda x: 7, 7)
 merge_aggregate_features(['Material', 'SalOrg'], lambda x: 7, 7)
 
 
-features[features['OrderQty'].isnull()].isnull().sum()
+
+#features[features['OrderQty'].isnull()].isnull().sum()
+#features[features['Material'] == 'ZyQoOQ']
 
 # Median per product
 #features['material_median'] = features.groupby('Material').median()
@@ -69,9 +70,6 @@ features[features['OrderQty'].isnull()].isnull().sum()
 for col in features.columns:
     if col not in ['ID', 'OrderQty', 'date']:
         features = features[features[col].notnull()]
-
-# Drop non-features
-features.drop(['date'], axis='columns', inplace=True)
 
 # Check no test rows have been dropped
 assert features['OrderQty'].isnull().sum() == 116028

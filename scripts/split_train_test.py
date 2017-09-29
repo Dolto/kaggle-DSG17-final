@@ -18,6 +18,7 @@ y_train.to_csv('data/y_train.csv', index=False, sep=';')
 print('y_train saved')
 
 test = features[~train_idxs]
+test = test.sort_values(['Month', 'SalOrg', 'Material'], ascending=True)
 
 X_test = test.drop(non_features, axis='columns')
 X_test.to_csv('data/X_test.csv', index=False, sep=';')
