@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import pandas as pd
 
 SAMPLE = True
@@ -12,4 +13,6 @@ test = pd.read_csv(test_filepath, sep=';')
 train = train[['ID', 'SalOrg', 'Material', 'Month', 'OrderQty']]
 
 merged = pd.concat((train, test), axis='rows')
+
+assert np.all(merged.columns == ['ID', 'Material', 'Month', 'OrderQty', 'SalOrg', 'date'])
 merged.to_csv('data/merged.csv', index=False, sep=';')
