@@ -22,7 +22,7 @@ def task_merge_train_test():
 def task_extract_features():
     return {
         'actions': ['python scripts/extract_features.py'],
-        'file_dep': ['data/train.csv'],
+        'file_dep': ['data/merged.csv'],
         'targets': ['data/features.csv']
     }
 
