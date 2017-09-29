@@ -28,6 +28,12 @@ def task_extract_features():
         'targets': ['data/features.csv']
     }
 
+def task_build_material_features():
+    return {
+        'actions': ['python scripts/build_material_features.py'],
+        'file_dep': ['data/features.csv'],
+        'targets': ['data/features_cat.csv']
+    }
 
 TRAINING_SETS = [
     'data/X_train.csv',
