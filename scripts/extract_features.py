@@ -49,18 +49,6 @@ features['mean_ordered_per_material_and_org'] = pd.concat([
     for _, g in features.groupby(['Material', 'SalOrg'])
 ])
 
-# # Standard dev quantity ordered per material
-# features['std_ordered_per_material'] = pd.concat([
-#     g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=1, window=len(g)).std()
-#     for _, g in features.groupby('Material')
-# ])
-
-# # Standard dev quantity ordered per material and per org
-# features['std_ordered_per_material_and_org'] = pd.concat([
-#     g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=1, window=len(g)).std()
-#     for _, g in features.groupby(['Material', 'SalOrg'])
-# ])
-
 # # Min quantity ordered per material
 # features['min_ordered_per_material'] = pd.concat([
 #     g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).min()
@@ -104,8 +92,6 @@ for col in ['last_order_days_ago_per_material',
             'median_ordered_per_material_and_org',
             'mean_ordered_per_material',
             'mean_ordered_per_material_and_org'#,
-            # 'std_ordered_per_material',
-            # 'std_ordered_per_material_and_org',
             # 'min_ordered_per_material',
             # 'min_ordered_per_material_and_org',
             # 'max_ordered_per_material',

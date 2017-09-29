@@ -11,7 +11,7 @@ y_pred = pipe.predict(X_test)
 
 submission = pd.DataFrame(data={
     'id': range(len(y_pred)),
-    'demand': y_pred
+    'demand': y_pred.clip(0)
 })
 
 submission.to_csv('models/xgboost/submission_xgboost.csv', index=False)
