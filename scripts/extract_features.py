@@ -22,7 +22,7 @@ def merge_aggregate_features(keys, window, wname):
     gb = features.groupby(keys)
 
     m = pd.concat([
-        g['OrderQty'].shift().rolling(min_periods=1, window=window(g)).mean()
+        g['OrderQty'].shift().rolling(min_periods=0, window=window(g)).mean()
         for _, g in gb
     ])
 
@@ -31,7 +31,7 @@ def merge_aggregate_features(keys, window, wname):
     print('mean_{}_{}'.format('_'.join(keys), wname))
 
     m = pd.concat([
-        g['OrderQty'].shift().rolling(min_periods=1, window=window(g)).median()
+        g['OrderQty'].shift().rolling(min_periods=0, window=window(g)).median()
         for _, g in gb
     ])
 
@@ -40,7 +40,7 @@ def merge_aggregate_features(keys, window, wname):
     print('median_{}_{}'.format('_'.join(keys), wname))
 
     m = pd.concat([
-        g['OrderQty'].shift().rolling(min_periods=1, window=window(g)).min()
+        g['OrderQty'].shift().rolling(min_periods=0, window=window(g)).min()
         for _, g in gb
     ])
 
@@ -49,7 +49,7 @@ def merge_aggregate_features(keys, window, wname):
     print('min_{}_{}'.format('_'.join(keys), wname))
 
     m = pd.concat([
-        g['OrderQty'].shift().rolling(min_periods=1, window=window(g)).max()
+        g['OrderQty'].shift().rolling(min_periods=0, window=window(g)).max()
         for _, g in gb
     ])
 
@@ -60,18 +60,12 @@ def merge_aggregate_features(keys, window, wname):
 
 merge_aggregate_features(['Material'], lambda x: len(x), 't')
 merge_aggregate_features(['Material', 'SalOrg'], lambda x: len(x), 't')
-merge_aggregate_features(['Material'], lambda x: 3, 3)
 merge_aggregate_features(['Material', 'SalOrg'], lambda x: 3, 3)
-merge_aggregate_features(['Material'], lambda x: 5, 5)
 merge_aggregate_features(['Material', 'SalOrg'], lambda x: 5, 5)
-merge_aggregate_features(['Material'], lambda x: 7, 7)
 merge_aggregate_features(['Material', 'SalOrg'], lambda x: 7, 7)
-
-# Median per product
-#features['material_median'] = features.groupby('Material').median()
-
-# Mean per material
-#features['material_mean'] = features.groupby('Material').mean()
+merge_aggregate_features(['Material'], lambda x: 3, 3)
+merge_aggregate_features(['Material'], lambda x: 5, 5)
+merge_aggregate_features(['Material'], lambda x: 7, 7)
 
 # Remove empty rows
 for col in features.columns:

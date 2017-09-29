@@ -23,19 +23,11 @@ def task_sample():
     }
 
 
-def task_resample():
-    return {
-        'actions': ['python scripts/resample.py'],
-        'file_dep': ['data/train.csv'],
-        'targets': ['data/train_resampled.csv']
-    }
-
-
 def task_merge_train_test():
     return {
         'actions': ['python scripts/merge_train_test.py'],
         'file_dep': [
-            'data/train_resampled.csv',
+            'data/train.csv',
             'data/test.csv',
         ],
         'targets': ['data/merged.csv']
