@@ -63,9 +63,11 @@ X_test['Material'] = y_test['Material'].copy()
 X_test['SalOrg'] = y_test['SalOrg'].copy()
 X_test['SPLIT'] = X_test['Material']
 
+
 for split, estimator in estimators.items():
     mask = X_test['SPLIT'] == split
-    y_pred = estimator.predict(X_test[mask].drop(['SPLIT', 'Material', 'SalOrg'], axis='columns'))
+    a = X_test[mask].drop(['SPLIT', 'Material', 'SalOrg'], axis='columns').copy()
+    y_pred = estimator.predict(a)
     y_test['OrderQty'][mask] = y_pred
 
 submission = pd.DataFrame(data={

@@ -32,9 +32,8 @@ print('y_val:', y_val.shape)
 pipe = pipeline.Pipeline([
     ('gbm', xgb.XGBRegressor(
         n_estimators=2000,
-        learning_rate=0.001,
-        max_depth=6,
-        subsample=0.8
+        learning_rate=0.01,
+        max_depth=8
     ))
 ])
 
