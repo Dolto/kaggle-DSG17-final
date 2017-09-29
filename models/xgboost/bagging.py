@@ -23,15 +23,15 @@ predictions = []
 
 n = 10
 for i in range(n):
-    pipeline.set_params(gbm__seed=random.randint(1, 10e9))
+    pipeline.set_params(gbm__seed=i)
     pipeline.fit(
         X_fit,
         y_fit['OrderQty'],
-        gbm__eval_set=[(X_val, y_val['OrderQty'])]
+        gbm__eval_set=[(X_val, y_val['OrderQty'])],
+        gbm__eval_metric=['mae'],
+        gbm__early_stopping_rounds=10,
+        gbm__verbose=True
     )
-    fit_score = metrics.accuracy_score(y_fit['OrderQty'], pipeline.predict(X_fit))
-    val_score = metrics.accuracy_score(y_val['OrderQty'], pipeline.predict(X_val))
-    print('Model {} / {}, fit_score: {:.5f}, val_score: {:.5f}'.format(i+1, n, fit_score, val_score))
     predictions.append(pipeline.predict(X_test))
 
 submission = pd.DataFrame(data={
