@@ -12,8 +12,22 @@ import xgboost as xgb
 X_train = pd.read_csv('data/X_train.csv', sep=';')
 y_train = pd.read_csv('data/y_train.csv', sep=';')['OrderQty']
 
+
+def custom_train_test_split(X_train, y_train):
+    idx_val = (X_train.year == 2017)
+    X_val = X_train[idx_val]
+    y_val = y_train[idx_val]
+    X_fit = X_train[~idx_val]
+    y_fit = y_train[~idx_val]
+    return X_fit, X_val, y_fit, y_val
+
 # Create a validation set with 20% of the training set
-X_fit, X_val, y_fit, y_val = model_selection.train_test_split(X_train, y_train, test_size=0.2)
+# X_fit, X_val, y_fit, y_val = model_selection.train_test_split(X_train, y_train, test_size=0.2)
+X_fit, X_val, y_fit, y_val = custom_train_test_split(X_train, y_train)
+print('X_fit:', X_fit.shape)
+print('X_val:', X_val.shape)
+print('y_fit:', y_fit.shape)
+print('y_val:', y_val.shape)
 
 pipe = pipeline.Pipeline([
     ('gbm', xgb.XGBRegressor(
@@ -23,12 +37,6 @@ pipe = pipeline.Pipeline([
         subsample=0.8
     ))
 ])
-
-
-def split(x):
-    return x['']
-
-# pipe = SplittingEstimator(pipe, split)
 
 pipe.fit(
     X_fit,
