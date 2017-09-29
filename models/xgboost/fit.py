@@ -18,12 +18,12 @@ X_fit, X_val, y_fit, y_val = model_selection.train_test_split(X_train, y_train, 
 pipe = pipeline.Pipeline([
     ('gbm', xgb.XGBRegressor(
         n_estimators=2000,
-        learning_rate=0.05,
-        max_depth=13,
-        subsample=0.8,
-        tree_method='exact'
+        learning_rate=0.1,
+        max_depth=8,
+        subsample=0.8
     ))
 ])
+
 
 def split(x):
     return x['']

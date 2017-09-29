@@ -49,29 +49,53 @@ features['mean_ordered_per_material_and_org'] = pd.concat([
     for _, g in features.groupby(['Material', 'SalOrg'])
 ])
 
-# # Min quantity ordered per material
-# features['min_ordered_per_material'] = pd.concat([
-#     g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).min()
-#     for _, g in features.groupby('Material')
-# ])
+# Min quantity ordered per material
+features['min_ordered_per_material'] = pd.concat([
+    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).min()
+    for _, g in features.groupby('Material')
+])
 
-# # Min quantity ordered per material and per org
-# features['min_ordered_per_material_and_org'] = pd.concat([
-#     g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).min()
-#     for _, g in features.groupby(['Material', 'SalOrg'])
-# ])
+# Min quantity ordered per material and per org
+features['min_ordered_per_material_and_org'] = pd.concat([
+    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).min()
+    for _, g in features.groupby(['Material', 'SalOrg'])
+])
 
-# # Max quantity ordered per material
-# features['max_ordered_per_material'] = pd.concat([
-#     g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).max()
-#     for _, g in features.groupby('Material')
-# ])
+# Max quantity ordered per material
+features['max_ordered_per_material'] = pd.concat([
+    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).max()
+    for _, g in features.groupby('Material')
+])
 
-# # Max quantity ordered per material and per org
-# features['max_ordered_per_material_and_org'] = pd.concat([
-#     g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).max()
-#     for _, g in features.groupby(['Material', 'SalOrg'])
-# ])
+# Max quantity ordered per material and per org
+features['max_ordered_per_material_and_org'] = pd.concat([
+    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).max()
+    for _, g in features.groupby(['Material', 'SalOrg'])
+])
+
+# Q1 quantity ordered per material
+features['q1_ordered_per_material'] = pd.concat([
+    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).quantile(.25)
+    for _, g in features.groupby('Material')
+])
+
+# Q1 quantity ordered per material and per org
+features['q1_ordered_per_material_and_org'] = pd.concat([
+    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).quantile(.25)
+    for _, g in features.groupby(['Material', 'SalOrg'])
+])
+
+# Q3 quantity ordered per material
+features['q3_ordered_per_material'] = pd.concat([
+    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).quantile(.75)
+    for _, g in features.groupby('Material')
+])
+
+# Q3 quantity ordered per material and per org
+features['q3_ordered_per_material_and_org'] = pd.concat([
+    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).quantile(.75)
+    for _, g in features.groupby(['Material', 'SalOrg'])
+])
 
 
 # Add a month splitter for training/testing
@@ -91,11 +115,15 @@ for col in ['last_order_days_ago_per_material',
             'median_ordered_per_material',
             'median_ordered_per_material_and_org',
             'mean_ordered_per_material',
-            'mean_ordered_per_material_and_org'#,
-            # 'min_ordered_per_material',
-            # 'min_ordered_per_material_and_org',
-            # 'max_ordered_per_material',
-            # 'max_ordered_per_material_and_org'
+            'mean_ordered_per_material_and_org',
+            'min_ordered_per_material',
+            'min_ordered_per_material_and_org',
+            'max_ordered_per_material',
+            'max_ordered_per_material_and_org',
+            'q1_ordered_per_material',
+            'q1_ordered_per_material_and_org',
+            'q3_ordered_per_material',
+            'q3_ordered_per_material_and_org'
             ]:
     features = features[features[col].notnull()]
 
