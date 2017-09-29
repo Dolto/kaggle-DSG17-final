@@ -2,10 +2,12 @@ def task_sample():
     return {
         'actions': ['python scripts/sample.py'],
         'file_dep': [
-            'data/train.csv'
+            'data/train.csv',
+            'data/test.csv'
         ],
         'targets': [
             'data/train_sample.csv',
+            'data/test_sample.csv',
         ]
     }
 
