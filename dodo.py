@@ -33,14 +33,6 @@ def task_make_cv():
     }
 
 
-def task_make_encoder():
-    return {
-        'actions': ['python scripts/make_encoder.py'],
-        'file_dep': ['data/X_train.csv', 'data/X_test.csv'],
-        'targets': ['models/encoder.pkl']
-    }
-
-
 def task_grid_search_catboost():
     return {
         'actions': ['python models/catboost/grid_search.py'],

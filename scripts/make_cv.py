@@ -1,6 +1,9 @@
+import datetime as dt
+
 from sklearn import model_selection
 from sklearn.externals import joblib
+import xam
 
 
-cv = model_selection.StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+cv = xam.model_selection.DatetimeCV(timedelta=dt.timedelta(days=30.5))
 joblib.dump(cv, 'models/cv.pkl')
