@@ -1,3 +1,14 @@
+def task_sample():
+    return {
+        'actions': ['python scripts/sample.py'],
+        'file_dep': [
+            'data/train.csv'
+        ],
+        'targets': [
+            'data/train_sample.csv',
+        ]
+    }
+
 def task_merge_train_test():
     return {
         'actions': ['python scripts/merge_train_test.py'],
