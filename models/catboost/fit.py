@@ -16,13 +16,15 @@ X_fit, X_val, y_fit, y_val = model_selection.train_test_split(X_train, y_train, 
 
 
 # Fit the model on the training set
-pipe = pipeline.Pipeline([
-    ('cat', CatBoostRegressor(learning_rate=0.05, depth=8, loss_function='MAE'))
-])
+pipe = CatBoostRegressor(
+    iterations=2000,
+    loss_function='MAE'
+)
+
 pipe.fit(
     X_fit,
     y_fit,
-    eval_set=[(X_fit, y_fit), (X_val, y_val)],
+    eval_set=[X_val, y_val],
     verbose=True
 )
 

@@ -73,15 +73,6 @@ def task_make_cv():
     }
 
 
-def task_grid_search_catboost():
-    return {
-        'actions': ['python models/catboost/grid_search.py'],
-        'file_dep': TRAINING_SETS + ['models/cv.pkl'],
-        'targets': ['models/catboost/params.json'],
-        'verbosity': 2
-    }
-
-
 def task_fit_catboost():
     return {
         'actions': ['python models/catboost/fit.py'],

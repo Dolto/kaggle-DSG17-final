@@ -2,7 +2,14 @@ import pandas as pd
 from sklearn.externals import joblib
 
 
-X_test = pd.read_csv('data/X_test.csv', sep=';')
+X_test = pd.read_csv('data/X_test.csv', sep=';').drop([
+    'max_ordered_per_material',
+    'min_ordered_per_material',
+    'max_ordered_per_material_and_org',
+    'count_ordered_per_material',
+    'count_ordered_per_material_and_org',
+    'min_ordered_per_material_and_org'
+], axis='columns')
 y_test = pd.read_csv('data/y_test.csv', sep=';')
 
 X_test['Material'] = y_test['Material'].copy()

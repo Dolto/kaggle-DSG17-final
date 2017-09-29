@@ -18,17 +18,11 @@ X_fit, X_val, y_fit, y_val = model_selection.train_test_split(X_train, y_train, 
 pipe = pipeline.Pipeline([
     ('gbm', xgb.XGBRegressor(
         n_estimators=2000,
-        learning_rate=0.1,
-        max_depth=8,
+        learning_rate=0.001,
+        max_depth=6,
         subsample=0.8
     ))
 ])
-
-
-def split(x):
-    return x['']
-
-# pipe = SplittingEstimator(pipe, split)
 
 pipe.fit(
     X_fit,

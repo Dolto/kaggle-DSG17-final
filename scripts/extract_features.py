@@ -73,30 +73,17 @@ features['max_ordered_per_material_and_org'] = pd.concat([
     for _, g in features.groupby(['Material', 'SalOrg'])
 ])
 
-# Q1 quantity ordered per material
-features['q1_ordered_per_material'] = pd.concat([
-    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).quantile(.25)
-    for _, g in features.groupby('Material')
+# Median per product
+features['material_median'] = pd.concat([
+    g['OrderQty'].median()
+    for _, g in features.groupby(['Material'])
 ])
 
-# Q1 quantity ordered per material and per org
-features['q1_ordered_per_material_and_org'] = pd.concat([
-    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).quantile(.25)
-    for _, g in features.groupby(['Material', 'SalOrg'])
+# Mean per material
+features['material_mean'] = pd.concat([
+    g['OrderQty'].mean()
+    for _, g in features.groupby(['Material'])
 ])
-
-# Q3 quantity ordered per material
-features['q3_ordered_per_material'] = pd.concat([
-    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).quantile(.75)
-    for _, g in features.groupby('Material')
-])
-
-# Q3 quantity ordered per material and per org
-features['q3_ordered_per_material_and_org'] = pd.concat([
-    g.sort_values('Month')['OrderQty'].shift().rolling(min_periods=0, window=len(g)).quantile(.75)
-    for _, g in features.groupby(['Material', 'SalOrg'])
-])
-
 
 # Add a month splitter for training/testing
 features['month_mod'] = features['month'] % 3
@@ -110,6 +97,7 @@ features['month_mod'] = features['month'] % 3
     # ])
 
 # Remove empty rows
+features_2 = features.copy()
 for col in ['last_order_days_ago_per_material',
             'last_order_days_ago_per_material_and_org',
             'median_ordered_per_material',
@@ -119,18 +107,14 @@ for col in ['last_order_days_ago_per_material',
             'min_ordered_per_material',
             'min_ordered_per_material_and_org',
             'max_ordered_per_material',
-            'max_ordered_per_material_and_org',
-            'q1_ordered_per_material',
-            'q1_ordered_per_material_and_org',
-            'q3_ordered_per_material',
-            'q3_ordered_per_material_and_org'
-            ]:
-    features = features[features[col].notnull()]
+            'max_ordered_per_material_and_org'
+        ]:
+    features_2 = features_2[features[col].notnull()]
 
 # Drop non-features
-features.drop(['date'], axis='columns', inplace=True)
+features_2.drop(['date'], axis='columns', inplace=True)
 
 # Check no test rows have been dropped
-assert features['OrderQty'].isnull().sum() == 116028
+assert features_2['OrderQty'].isnull().sum() == 116028
 
-features.to_csv('data/features.csv', index=False, sep=';')
+features_2.to_csv('data/features.csv', index=False, sep=';')
