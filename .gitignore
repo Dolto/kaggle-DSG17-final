@@ -1,3 +1,4 @@
+.DS_Store
 # General
 *.pyc
 .ipynb_checkpoints/
