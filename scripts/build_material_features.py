@@ -9,8 +9,6 @@ features_names = [
     'MktABC',
     'SubFct',
     'Gamma',
-    # 'Manufacturer',
-    'Business',
     'DP_FAMILY_CODE',
     'PRODUCT_STATUS'
 ]
