@@ -77,7 +77,7 @@ def task_fit_catboost():
 def task_predict_catboost():
     return {
         'actions': ['python models/catboost/predict.py'],
-        'file_dep': TEST_SETS + ['models/catboost/model.pkl'],
+        'file_dep': TEST_SETS,
         'targets': ['models/catboost/submission_catboost.csv']
     }
 
@@ -103,7 +103,7 @@ def task_fit_xgboost():
 def task_predict_xgboost():
     return {
         'actions': ['python models/xgboost/predict.py'],
-        'file_dep': TEST_SETS + ['models/encoder.pkl', 'models/xgboost/pipeline.pkl'],
+        'file_dep': TEST_SETS + ['models/xgboost/pipeline.pkl'],
         'targets': ['models/xgboost/submission_xgboost.csv']
     }
 
