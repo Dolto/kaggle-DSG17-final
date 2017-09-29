@@ -23,6 +23,16 @@ features['median_ordered_per_material'] = pd.concat([
 ])
 features = features[features['median_ordered_per_material'].notnull()]
 
+# Mean quantity ordered per material
+features['mean_ordered_per_material'] = pd.concat([
+    g['OrderQty'].shift().rolling(min_periods=1, window=len(g)).mean()
+    for _, g in features.groupby('Material')
+])
+features = features[features['mean_ordered_per_material'].notnull()]
+
+# Add a month splitter for training/testing
+features['month_mod'] = features['month'] % 3
+
 # Drop non-features
 features.drop(['Month', 'date'], axis='columns', inplace=True)
 
