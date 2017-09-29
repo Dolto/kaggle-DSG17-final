@@ -3,7 +3,7 @@ from sklearn import preprocessing
 
 
 # Load the training and test set
-features = pd.read_csv('data/merged.csv')
+features = pd.read_csv('data/merged.csv', sep=';')
 
 # Fill dates
 features['Month'].fillna(features['date'], inplace=True)
@@ -33,4 +33,4 @@ features = features[features['mean_ordered_per_material'].notnull()]
 # Drop non-features
 features.drop(['Month', 'date'], axis='columns', inplace=True)
 
-features.to_csv('data/features.csv', index=False)
+features.to_csv('data/features.csv', index=False, sep=';')
