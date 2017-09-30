@@ -23,7 +23,12 @@ predictions = []
 
 n = 5
 for i in range(n):
-    pipeline.set_params(gbm__seed=int(random.randint(1, 10000)))
+    pipeline.set_params(
+        gbm__seed=int(random.randint(1, 10000)),
+        gbm__n_estimators=2000,
+        gbm__learning_rate=0.01,
+        gbm__max_depth=8
+    )
     pipeline.fit(
         X_fit,
         y_fit['OrderQty'],
