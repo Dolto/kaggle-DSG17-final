@@ -17,8 +17,19 @@ y_train = train[non_features]
 y_train.to_csv('data/y_train.csv', index=False, sep=';')
 print('y_train saved')
 
-test = features[~train_idxs]
-test = test.sort_values(['Month', 'SalOrg', 'Material'], ascending=True)
+
+
+true_test = pd.read_csv('data/test.csv', sep=';')
+test = features[~train_idxs].copy()
+
+true_test['sort_col'] = true_test['date'] + true_test['SalOrg'].str.upper() + true_test['Material'].str.upper()
+test['Month'] = pd.to_datetime(test['Month'])
+test['Month'] = test['Month'].apply(lambda x: x.strftime('%Y-%m'))
+test['sort_col'] = test['Month'] + test['SalOrg'].str.upper() + test['Material'].str.upper()
+
+test.set_index('sort_col', inplace=True)
+true_test.set_index('sort_col', inplace=True)
+test = test.align(true_test, axis=0)[0]
 
 X_test = test.drop(non_features, axis='columns')
 X_test.to_csv('data/X_test.csv', index=False, sep=';')
