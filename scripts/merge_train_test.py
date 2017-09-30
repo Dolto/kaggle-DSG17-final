@@ -9,6 +9,7 @@ test_filepath = os.path.join('data', 'test.csv') if not SAMPLE else os.path.join
 
 train = pd.read_csv(train_filepath, sep=';')
 test = pd.read_csv(test_filepath, sep=';')
+test['n_row'] = range(len(test))
 test['is_test'] = True
 
 train = train.groupby(['SalOrg', 'Material', 'Month'])[['OrderQty']].sum().reset_index()
@@ -19,8 +20,7 @@ merged['Month'].fillna(merged['date'], inplace=True)
 merged.drop('date', axis='columns', inplace=True)
 merged.set_index(pd.to_datetime(merged['Month']), inplace=True)
 
-
-merged = merged.groupby(['SalOrg', 'Material']).resample('1M').sum()
+merged = merged.groupby(['SalOrg', 'Material']).resample('MS').sum()
 merged['OrderQty'][merged['is_test'].isnull()] = 0
 merged.reset_index(inplace=True)
 merged.drop('is_test', axis='columns', inplace=True)
